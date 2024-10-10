@@ -2,5 +2,5 @@
 
 Generating Gameplay Footage
 
-create virtual enviornment
+py -m venv .venv
 pip install -r requirements.txt

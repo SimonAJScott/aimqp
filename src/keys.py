@@ -1,7 +1,9 @@
 from enum import Enum
-from pynput.keyboard import Key
-import pyautogui
+from pynput.keyboard import Key, Controller
 import time
+import random
+
+keyboard = Controller()
 
 
 class Keys(Enum):
@@ -12,11 +14,26 @@ class Keys(Enum):
     JUMP = 'c'     # Jump
     DASH = 'x'           # Dash
     GRAB = 'z'  # Grab
-    # TALK = 'x'      # Interact (or whatever key you have mapped)
-    # MENU = 'esc'        # Open menu
 
     def press(self):
-        """Press the key associated with this enum member using pyautogui."""
-        pyautogui.keyDown(self.value)  # Press down the key
-        time.sleep(0.1)  # Hold for a brief moment
-        pyautogui.keyUp(self.value)    # Release the key
+        """
+        presses said button for x seconds
+        """
+        keyboard.press(self.value)
+        time.sleep(0.1)
+        keyboard.release(self.value)
+
+
+def randomButtons(duration):
+    """
+        presses random buttons for x seconds
+        """
+    start_time = time.time()  # Record the start time
+    end_time = start_time + duration  # Run for duration seconds
+
+    while time.time() < end_time:
+        key_to_press = random.choice(list(Keys))  # Randomly choose a key
+        # Print which key is being pressed
+        print(f"Pressing {key_to_press.name}")
+        key_to_press.press()  # Press the randomly selected key
+        time.sleep(0.2)  # Sleep for half a second between presses

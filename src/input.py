@@ -125,7 +125,7 @@ class Actions:
     @staticmethod
     def wall_climb(direction, duration=0.1):
         """
-        Wall climbs up
+        Wall climbs up or down
 
         :param duration: Time in seconds to hold the keys.
         :param direction: Direction to wall climb, must be up or down (may change later)

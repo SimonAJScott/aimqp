@@ -5,6 +5,7 @@ import numpy as np
 #loading in image
 celeste_img = cv.imread('full image5.jpg', cv.IMREAD_UNCHANGED)
 madeline_img = cv.imread('zoomed in.jpg', cv.IMREAD_UNCHANGED)
+death_screen = cv.imread('death screen.jpg', cv.IMREAD_UNCHANGED)
 
 
 #getting result

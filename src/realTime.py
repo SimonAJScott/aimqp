@@ -35,7 +35,7 @@ class objectDetection:
             #points = vision_example.find(screenshot, 0.7, 'points')
 
             # debug the loop rate
-            print('FPS {}'.format(1 / (time() - self.loop_time)))
+            #print('FPS {}'.format(1 / (time() - self.loop_time)))
             self.loop_time = time()
 
             # press 'p' with the output window focused to exit.
@@ -51,9 +51,10 @@ class objectDetection:
         # initialize the WindowCapture class
         self.wincap = WindowCapture('Celeste')
         # initialize the Vision class
-        self.vision_detect = Vision('death level.jpg')
+        self.vision_detect = Vision('anglesbig.jpg')
 
         self.loop_time = time()
+        testNum = 0
         while(True):
 
             # get an updated image of the game
@@ -61,14 +62,16 @@ class objectDetection:
 
             # display the processed image
             if self.screenshot is not None:
-                self.points = self.vision_detect.find(self.screenshot, 0.5, 'rectangles')
+                self.points = self.vision_detect.find(self.screenshot, 0.46, 'rectangles')
             if self.points:
-                cv.destroyAllWindows()
-                break
+                #cv.destroyAllWindows()
+                #break
+                print('lmao died ->',testNum)
+                testNum = testNum + 1
             #points = vision_example.find(screenshot, 0.7, 'points')
 
             # debug the loop rate
-            print('FPS {}'.format(1 / (time() - self.loop_time)))
+            #print('FPS {}'.format(1 / (time() - self.loop_time)))
             self.loop_time = time()
 
             # press 'p' with the output window focused to exit.

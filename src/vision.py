@@ -27,7 +27,7 @@ class Vision:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
 
-    def find(self, fullGame_img, threshold=0.6, debug_mode=None):
+    def find(self, fullGame_img, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
         result = cv.matchTemplate(fullGame_img, self.playerCharacter_img, self.method)
 

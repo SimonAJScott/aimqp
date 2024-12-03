@@ -17,36 +17,6 @@ class objectDetection:
         points = None
         loop_time = time()
 
-
-    def find_player(self):
-        # initialize the WindowCapture class
-        self.wincap = WindowCapture('Celeste')
-        # initialize the Vision class
-        self.vision_detect = Vision('zoomed in right4.jpg') or Vision('zoomed in left4.jpg')
-
-        self.loop_time = time()
-        while(True):
-
-            # get an updated image of the game
-            self.screenshot = self.wincap.get_screenshot()
-
-            # display the processed image
-            self.points = self.vision_detect.find(self.screenshot, 0.5, 'rectangles')
-            #points = vision_example.find(screenshot, 0.7, 'points')
-
-            # debug the loop rate
-            #print('FPS {}'.format(1 / (time() - self.loop_time)))
-            self.loop_time = time()
-
-            # press 'p' with the output window focused to exit.
-            # waits 1 ms every loop to process key presses
-            
-            if cv.waitKey(1) == ord('p'):
-                cv.destroyAllWindows()
-                break
-
-        print('Done.')
-
     def find_failstate(self):
         # initialize the WindowCapture class
         self.wincap = WindowCapture('Celeste')
@@ -84,5 +54,4 @@ class objectDetection:
         print('Done.')
 
 detector = objectDetection()
-#detector.find_player()  # To detect the player
 detector.find_failstate()  # To detect fail state

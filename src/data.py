@@ -1,28 +1,26 @@
 from input import Keys
-# example [L,3,10]
-# multiprocessing or math (queue?)
-# [L,3,10] [J,2,5]
+# example [LR, 1.3, 10%]
 
 
 class Data:
-    def __init__(self):
-        self.key = None
+    def __init__(self, num_inputs):
+        self.keys = None
         self.press_duration = -1
-        self.wait_duration = -1
+        self.percentage = 1/num_inputs
 
     # Define equality comparison
     def __eq__(self, other):
         if not isinstance(other, Data):
             return False
-        return (self.key == other.key and
+        return (self.keys == other.keys and
                 self.press_duration == other.press_duration and
-                self.wait_duration == other.wait_duration)
+                self.percentage == other.percentage)
 
-    def getKey(self):
-        return self.key
+    def getKeys(self):
+        return self.keys
 
-    def setKey(self, key: Keys):
-        self.key = key
+    def setKeys(self, keys: Keys):
+        self.keys = keys
 
     def getPressDuration(self):
         return self.press_duration
@@ -30,8 +28,8 @@ class Data:
     def setPressDuration(self, duration: int):
         self.press_duration = duration
 
-    def getWaitDuration(self):
-        return self.wait_duration
+    def getPercentage(self):
+        return self.percentage
 
-    def setWaitDuration(self, wait: int):
-        self.wait_duration = wait
+    def setPercentage(self, percent: float):
+        self.percentage = percent

@@ -1,6 +1,8 @@
 import data
 import input
 import random
+from input import Keys
+import itertools
 
 
 class LevelMemory:
@@ -14,10 +16,17 @@ class LevelMemory:
     def generateRandom(self, num_inputs):
         randomArray = []
         for i in range(num_inputs):
-            randomArray.insert(self.generateRandomData)
+            randomArray.insert(self.generateInitialRandomData)
         self.level_data = randomArray
+    
+    def generateInitialRandomData(self):
+        # to the nearest tenth from 0-5 seconds. we can change this
+        temp = data.Data()
+        temp.setKey(random.choice(list(input)))
+        temp.setPressDuration(round(random.uniform(0, 5), 1))
+        return temp
 
-    def update(self, failedList, failedData: data.Data):
+    def update(self, failedList, failedData: data.Data): # need to update for percentages
         updatedArray = []
         whenBroke = -1
         for i in range(0, len(failedList)):
@@ -32,21 +41,17 @@ class LevelMemory:
             updatedArray[i] = self.generateRandomData()
         self.level_data = updatedArray
 
-    def generateRandomData(self):
-        # to the nearest tenth from 0-5 seconds. we can change this
-        temp = data.Data()
-        temp.setKey(random.choice(list(input)))
-        temp.setPressDuration(round(random.uniform(0, 5), 1))
-        temp.setWaitDuration(round(random.uniform(0, 5), 1))
-        return temp
+class PercentData:
+    def __init__(self, num_inputs:int):
+        self.allData = generateInitialData(num_inputs)
 
-    def generateRandomData(self, failedData: data.Data):
-        # to the nearest tenth from 0-5 seconds. we can change this
-        temp = data.Data()
-        temp.setKey(random.choice(list(input)))
-        temp.setPressDuration(round(random.uniform(0, 5), 1))
-        temp.setWaitDuration(round(random.uniform(0, 5), 1))
-        if (temp == failedData):
-            self.generateRandomData(failedData)
-        else:
-            return temp
+    def generateInitialData(self, num_inputs:int):
+        combinations = list(itertools.combinations(list(Keys), 2)) #we assume combinations of 2
+        allData = []
+        for num in range(num_inputs):
+            for ele in combinations:
+                for i in range(51):
+                    temp = data.Data(len(list(Keys))*50)
+                    temp.setKeys(ele)
+                    temp.setPressDuration(i/10)
+            allData.append

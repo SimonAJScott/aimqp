@@ -1,4 +1,4 @@
-from input import Keys
+from keys_enum import Keys
 # example [LR, 1.3, 10%]
 
 

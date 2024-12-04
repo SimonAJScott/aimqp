@@ -1,19 +1,10 @@
-from enum import Enum
-from pynput.keyboard import Key, Controller
+from data import Data
+from pynput.keyboard import Controller
 import time
 import random
+from keys_enum import Keys
 
 keyboard = Controller()
-
-
-class Keys(Enum):
-    UP = Key.up         # Move up (on walls?)
-    DOWN = Key.down     # Move down
-    LEFT = Key.left     # Move left
-    RIGHT = Key.right    # Move right
-    JUMP = 'c'     # Jump
-    DASH = 'x'           # Dash
-    GRAB = 'z'  # Grab
 
 
 class Actions:
@@ -21,8 +12,7 @@ class Actions:
     A class to input in-game actions. (can add more later)
     """
 
-    @staticmethod
-    def press(key, duration):
+    def press(self, key, duration):
         """
         presses said button for a certain duration, then lifts
 
@@ -33,8 +23,7 @@ class Actions:
         time.sleep(duration)
         keyboard.release(key.value)
 
-    @staticmethod
-    def randomButtons(duration=1, wait=0.2):
+    def randomButtons(self, duration=1, wait=0.2):
         """
         Presses random buttons (did not implement multiple buttons, can change later)
 
@@ -51,3 +40,18 @@ class Actions:
             # Press the randomly selected key
             Actions.press(key_to_press, duration)
             time.sleep(wait)  # Sleep for half a second between presses
+
+    def pressMultiple(self, data:Data):
+        """
+        Presses multiple buttons for a certain duration, then lifts them.
+        """
+        keys = data.getKeys
+        # Press all keys
+        for key in keys:
+            keyboard.press(key.value)
+        
+        time.sleep(data.getPressDuration)
+        
+        # Release all keys
+        for key in keys:
+            keyboard.release(key.value)

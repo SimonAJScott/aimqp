@@ -7,8 +7,8 @@ from vision import Vision
 
 
 class objectDetection:
-   
-    #properties
+
+    # properties
     def __init__(self):
         wincap = None
         vision_detect = None
@@ -24,35 +24,29 @@ class objectDetection:
         # initialize the Vision class
         # add the image of the death screen below
         self.vision_detect = Vision('anglesbig.jpg')
-        
-
         self.loop_time = time()
-        testNum = 0
-        while(True):
+        while (True):
 
             # get an updated image of the game
             self.screenshot = self.wincap.get_screenshot()
 
             # display the processed image
             if self.screenshot is not None:
-                self.points = self.vision_detect.find(self.screenshot, 0.46, 'rectangles')
-                #change the number in order to change the accuracy of the threshold. example self.points = self.vision_detect.find(self.screenshot, 0.67, 'rectangles')
+                self.points = self.vision_detect.find(
+                    self.screenshot, 0.46, 'rectangles')
+                # change the number in order to change the accuracy of the threshold. example self.points = self.vision_detect.find(self.screenshot, 0.67, 'rectangles')
             if self.points:
-                # prints a statement confirming a failure 
-                print('lmao died ->',testNum)
-                testNum = testNum + 1
+                # prints a statement confirming a failure
+                cv.destroyAllWindows()
+                break
             # debug the loop rate
-            #print('FPS {}'.format(1 / (time() - self.loop_time)))
+            # print('FPS {}'.format(1 / (time() - self.loop_time)))
             self.loop_time = time()
 
             # press 'p' with the output window focused to exit.
             # waits 1 ms every loop to process key presses
-            
+
             if cv.waitKey(1) == ord('p'):
                 cv.destroyAllWindows()
                 break
-
         print('Done.')
-
-detector = objectDetection()
-detector.find_failstate()  # To detect fail state

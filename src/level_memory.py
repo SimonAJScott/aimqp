@@ -12,16 +12,21 @@ class LevelMemory:
     def getLevelData(self):
         return self.level_data
 
+    def printLevelData(self):
+        for data in self.level_data:
+            data.printData()
+
     def generateRandom(self, num_inputs):
         randomArray = []
         for i in range(num_inputs):
-            randomArray.insert(i,self.generateInitialRandomData)
+            randomArray.insert(i, self.generateInitialRandomData())
         self.level_data = randomArray
-    
+
     def generateInitialRandomData(self):
         # to the nearest tenth from 0-5 seconds. we can change this
         temp = Data()
-        temp.setKeys(random.choice(itertools.combinations(list(Keys), 2)))
+        combinationsList = list(itertools.combinations(list(Keys), 2))
+        temp.setKeys(random.choice(combinationsList))
         temp.setPressDuration(round(random.uniform(0, 5), 1))
         return temp
 

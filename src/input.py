@@ -41,17 +41,17 @@ class Actions:
             Actions.press(key_to_press, duration)
             time.sleep(wait)  # Sleep for half a second between presses
 
-    def pressMultiple(self, data:Data):
+    def pressMultiple(self, data: Data):
         """
         Presses multiple buttons for a certain duration, then lifts them.
         """
-        keys = data.getKeys
+        data.printData()
+        keys = data.getKeys()
         # Press all keys
         for key in keys:
             keyboard.press(key.value)
-        
-        time.sleep(data.getPressDuration)
-        
+        time.sleep(data.getPressDuration())
+
         # Release all keys
         for key in keys:
             keyboard.release(key.value)

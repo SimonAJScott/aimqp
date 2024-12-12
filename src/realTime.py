@@ -5,11 +5,10 @@ from time import time
 from windowCapture import WindowCapture
 from vision import Vision
 
-#os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 class objectDetection:
    
-    #Properties
+    #properties
     def __init__(self):
         wincap = None
         vision_detect = None
@@ -18,10 +17,14 @@ class objectDetection:
         loop_time = time()
 
     def find_failstate(self):
+        # this works assuming the game being run has a death screen which can be added
         # initialize the WindowCapture class
+        # write the exact name of the program file being run, if it is not exact it will not work. Certain games also have potential conflicts when recorded which may cause issues.
         self.wincap = WindowCapture('Celeste')
         # initialize the Vision class
+        # add the image of the death screen below
         self.vision_detect = Vision('anglesbig.jpg')
+        
 
         self.loop_time = time()
         testNum = 0
@@ -33,13 +36,11 @@ class objectDetection:
             # display the processed image
             if self.screenshot is not None:
                 self.points = self.vision_detect.find(self.screenshot, 0.46, 'rectangles')
+                #change the number in order to change the accuracy of the threshold. example self.points = self.vision_detect.find(self.screenshot, 0.67, 'rectangles')
             if self.points:
-                #cv.destroyAllWindows()
-                #break
+                # prints a statement confirming a failure 
                 print('lmao died ->',testNum)
                 testNum = testNum + 1
-            #points = vision_example.find(screenshot, 0.7, 'points')
-
             # debug the loop rate
             #print('FPS {}'.format(1 / (time() - self.loop_time)))
             self.loop_time = time()

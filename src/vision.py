@@ -55,7 +55,7 @@ class Vision:
 
         points = []
         if len(rectangles):
-            #print('Found playerCharacter.')
+            # print('Found playerCharacter.')
 
             line_color = (0, 255, 0)
             line_type = cv.LINE_4
@@ -86,7 +86,7 @@ class Vision:
 
         if debug_mode:
             cv.imshow('Matches', fullGame_img)
-            #cv.waitKey()
-            #cv.imwrite('result_click_point.jpg', fullGame_img)
+            # cv.waitKey()
+            # cv.imwrite('result_click_point.jpg', fullGame_img)
 
         return points

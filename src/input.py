@@ -5,6 +5,7 @@ import random
 from keys_enum import Keys
 
 keyboard = Controller()
+maxDuration = 1
 
 
 class Actions:
@@ -45,20 +46,17 @@ class Actions:
         """
         Presses multiple buttons for a certain duration, then lifts them.
         """
+        if event.is_set():
+            event.clear()
+            # time.sleep(0.5)  # to try and not trigger cv2 twice
+            return 1
         data.printData()
         keys = data.getKeys()
         # Press all keys
         for key in keys:
             keyboard.press(key.value)
-        if event.is_set():
-            # Release all keys
-            for key in keys:
-                keyboard.release(key.value)
-            event.clear()
-            time.sleep(0.5)  # to try and not trigger cv2 twice
-            return 1
-        time.sleep(data.getPressDuration())
 
+        time.sleep(data.getPressDuration())
         # Release all keys
         for key in keys:
             keyboard.release(key.value)

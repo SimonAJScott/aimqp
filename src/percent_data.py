@@ -2,6 +2,7 @@ from data import Data
 import itertools
 from keys_enum import Keys
 import pickle
+from input import maxDuration
 
 
 class PercentData:
@@ -13,11 +14,16 @@ class PercentData:
             list(Keys), 2))  # we assume combinations of 2
         allData = {}
         for keys in combinations:
-            for i in range(21):  # assuming 0-5, 0.1 increments (seconds)
-                tempPercent = 1/(len(list(combinations))*20)
+            for i in range(maxDuration*10+1):  # assuming 0-1, 0.1 increments (seconds)
+                tempPercent = 1/(len(list(combinations))*(maxDuration*10))
                 tempPressDuration = i/10
                 key = (keys, tempPressDuration)
                 allData[key] = tempPercent
+        tempList = list(allData.keys())
+        i = 0
+        for ele in tempList:
+            print(i, ": ", ele)
+            i = i + 1
         return allData
 
     def getAllData(self):
@@ -31,7 +37,7 @@ class PercentData:
     def updateData(self, data: Data, failed):
         key = (data.getKeys(), data.getPressDuration())
         currentPercent = self.allData[key]
-        n = len(self.allData) - 1
+        # n = len(self.allData) - 1
         if failed:
             self.allData[key] = currentPercent - currentPercent*.1
 

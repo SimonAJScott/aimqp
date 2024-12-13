@@ -3,6 +3,7 @@ import random
 from keys_enum import Keys
 import itertools
 from percent_data import PercentData
+from input import maxDuration
 
 
 class LevelMemory:
@@ -28,11 +29,11 @@ class LevelMemory:
         temp = Data()
         combinationsList = list(itertools.combinations(list(Keys), 2))
         temp.setKeys(random.choice(combinationsList))
-        temp.setPressDuration(round(random.uniform(0, 2), 1))
+        temp.setPressDuration(round(random.uniform(0, maxDuration), 1))
         return temp
 
     def update(self, where: int, percentData: PercentData):
-        where = where - 3
+        where = where - 5
         self.level_data[where]
         options = list(percentData.allData.keys())
         weights = list(percentData.allData.values())

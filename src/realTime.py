@@ -49,4 +49,3 @@ class objectDetection:
             if cv.waitKey(1) == ord('p'):
                 cv.destroyAllWindows()
                 break
-        print('Done.')

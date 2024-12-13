@@ -20,7 +20,7 @@ def main():
     event = multiprocessing.Event()
 
     # Run the algorithm while death detection is ongoing
-    algorithmV1(10, 100, event)
+    algorithmV1(2, 100, 2.5, event, game)
 
 
 def startDeathDetection(event):
@@ -31,29 +31,41 @@ def startDeathDetection(event):
     event.set()
 
 
-def algorithmV1(num_generations, num_inputs, event):
+def algorithmV1(num_generations: int, num_inputs: int, secondsCut: float, event, game):
     actions = Actions()
     percentData = PercentData()
-    print("created percent data")
+    percentData.loadData(game)
     currentLevelMemory = LevelMemory(num_inputs)
-    currentLevelMemory.printLevelData()
+    currentLevelMemory.loadData(game)
     for i in range(num_generations):
         print("-----------------------generation ",
               i+1, " ---------------------")
         levelMemoryList = currentLevelMemory.getLevelData()
-        print("created current memory")
         # Start a new process for death detection at the start of each generation
         death_detection_process = multiprocessing.Process(
             target=startDeathDetection, args=(event,))
         death_detection_process.start()
         time.sleep(2)
         for j in range(0, len(levelMemoryList)):
+            actionsCut = []
             # need to add stop when you die and cut off array to recreate
             if (Actions.pressMultiple(actions, levelMemoryList[j], event) == 1):
-                percentData.updateData(levelMemoryList[j], True)
-                currentLevelMemory.update(j, percentData)
+                secondsPassed = 0
+                for k in range(j, 0, -1):
+                    secondsPassed = secondsPassed + \
+                        levelMemoryList[k].getPressDuration()
+                    if secondsPassed < secondsCut:
+                        actionsCut.append(levelMemoryList[k])
+                numCut = percentData.updateData(actionsCut, True)
+
+                # calculate which actions to update in helper
+                print("NUMBER OF ITEMS BEING CUT:", numCut)
+                currentLevelMemory.update(j-numCut-2, percentData)
                 break
-            percentData.updateData(levelMemoryList[j], False)
+            actionsCut.append(levelMemoryList[j])
+            percentData.updateData(actionsCut, False)
+    percentData.saveData(game)  # change later based on game
+    currentLevelMemory.saveData(game)
     exit(1)
 
 

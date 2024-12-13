@@ -19,11 +19,6 @@ class PercentData:
                 tempPressDuration = i/10
                 key = (keys, tempPressDuration)
                 allData[key] = tempPercent
-        tempList = list(allData.keys())
-        i = 0
-        for ele in tempList:
-            print(i, ": ", ele)
-            i = i + 1
         return allData
 
     def getAllData(self):
@@ -33,23 +28,24 @@ class PercentData:
         filename = f"{title}_percentdata.pkl"
         with open(filename, "wb") as file:
             pickle.dump(self.allData, file)
+        print("Saved data:", filename)
 
-    def updateData(self, data: Data, failed):
-        key = (data.getKeys(), data.getPressDuration())
-        currentPercent = self.allData[key]
-        # n = len(self.allData) - 1
-        if failed:
-            self.allData[key] = currentPercent - currentPercent*.1
+    def updateData(self, data: list[Data], failed):
+        for tempData in data:
+            key = (tempData.getKeys(), tempData.getPressDuration())
+            currentPercent = self.allData[key]
+            if failed:
+                self.allData[key] = currentPercent - currentPercent*.1
+            else:
+                self.allData[key] = currentPercent + currentPercent*.01
 
-        else:
-            self.allData[key] = currentPercent + currentPercent*.01
+            total = sum(self.allData.values())
+            if total != 1:
+                for key in self.allData:
+                    self.allData[key] = self.allData[key] / total
+        return len(data)
 
-        total = sum(self.allData.values())
-        if total != 1:
-            for key in self.allData:
-                self.allData[key] = self.allData[key] / total
-
-    def load_and_update_data(self, title):
+    def loadData(self, title):
         # Set the filename based on the title
         filename = f"{title}_percentdata.pkl"
 
@@ -58,8 +54,7 @@ class PercentData:
             with open(filename, "rb") as file:
                 # Update self.allData with loaded data
                 self.allData = pickle.load(file)
-            print("Data loaded and updated successfully.")
+            print("Percent data loaded successfully.")
         except FileNotFoundError:
-            print(f"{filename} not found. Make sure the file exists.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+            print("No file found, created new percent dataset")
+            return

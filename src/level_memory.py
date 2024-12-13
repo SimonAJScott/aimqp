@@ -1,3 +1,4 @@
+import pickle
 from data import Data
 import random
 from keys_enum import Keys
@@ -33,7 +34,6 @@ class LevelMemory:
         return temp
 
     def update(self, where: int, percentData: PercentData):
-        where = where - 5
         self.level_data[where]
         options = list(percentData.allData.keys())
         weights = list(percentData.allData.values())
@@ -44,3 +44,23 @@ class LevelMemory:
             temp.setKeys(keys[0])
             temp.setPressDuration(keys[1])
             self.level_data[i] = temp
+
+    def loadData(self, title):
+        # Set the filename based on the title
+        filename = f"{title}_levelmemorydata.pkl"
+
+        # Load the dictionary from the file
+        try:
+            with open(filename, "rb") as file:
+                # Update self.allData with loaded data
+                self.level_data = pickle.load(file)
+            print("Level Memory data loaded successfully.")
+        except FileNotFoundError:
+            print("No file found, created new level-memory dataset")
+            return
+
+    def saveData(self, title):
+        filename = f"{title}_levelmemorydata.pkl"
+        with open(filename, "wb") as file:
+            pickle.dump(self.level_data, file)
+        print("Saved data:", filename)

@@ -2,6 +2,7 @@ from data import Data
 import random
 from keys_enum import Keys
 import itertools
+from percent_data import PercentData
 
 
 class LevelMemory:
@@ -27,20 +28,18 @@ class LevelMemory:
         temp = Data()
         combinationsList = list(itertools.combinations(list(Keys), 2))
         temp.setKeys(random.choice(combinationsList))
-        temp.setPressDuration(round(random.uniform(0, 5), 1))
+        temp.setPressDuration(round(random.uniform(0, 2), 1))
         return temp
 
-    # def update(self, failedList, failedData: Data): # need to update for percentages
-    #     updatedArray = []
-    #     whenBroke = -1
-    #     for i in range(0, len(failedList)):
-    #         updatedArray[i] = failedList[i]
-    #         if (failedList[i] == failedData):
-    #             whenBroke = i-1
-    #             break
-
-    #     for i in range(whenBroke, len(failedList)):
-    #         if (i == whenBroke+1):
-    #             updatedArray[i] = self.generateRandomData(failedData)
-    #         updatedArray[i] = self.generateRandomData()
-    #     self.level_data = updatedArray
+    def update(self, where: int, percentData: PercentData):
+        where = where - 3
+        self.level_data[where]
+        options = list(percentData.allData.keys())
+        weights = list(percentData.allData.values())
+        for i in range(where, len(self.level_data)):
+            temp = Data()
+            keys = random.choices(
+                options, weights=weights, k=1)[0]
+            temp.setKeys(keys[0])
+            temp.setPressDuration(keys[1])
+            self.level_data[i] = temp

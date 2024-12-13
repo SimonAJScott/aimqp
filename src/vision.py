@@ -17,7 +17,8 @@ class Vision:
     def __init__(self, playerCharacter_img_path, method=cv.TM_CCOEFF_NORMED):
         # load the image we're trying to match
         # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
-        self.playerCharacter_img = cv.imread(playerCharacter_img_path, cv.IMREAD_UNCHANGED)
+        self.playerCharacter_img = cv.imread(
+            playerCharacter_img_path, cv.IMREAD_UNCHANGED)
 
         # Save the dimensions of the playerCharacter image
         self.playerCharacter_w = self.playerCharacter_img.shape[1]
@@ -29,19 +30,21 @@ class Vision:
 
     def find(self, fullGame_img, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
-        result = cv.matchTemplate(fullGame_img, self.playerCharacter_img, self.method)
+        result = cv.matchTemplate(
+            fullGame_img, self.playerCharacter_img, self.method)
 
         # Get the all the positions from the match result that exceed our threshold
         locations = np.where(result >= threshold)
         locations = list(zip(*locations[::-1]))
-        #print(locations)
+        # print(locations)
 
         # You'll notice a lot of overlapping rectangles get drawn. We can eliminate those redundant
         # locations by using groupRectangles().
         # First we need to create the list of [x, y, w, h] rectangles
         rectangles = []
         for loc in locations:
-            rect = [int(loc[0]), int(loc[1]), self.playerCharacter_w, self.playerCharacter_h]
+            rect = [int(loc[0]), int(loc[1]),
+                    self.playerCharacter_w, self.playerCharacter_h]
             # Add every box to the list twice in order to retain single (non-overlapping) boxes
             rectangles.append(rect)
             rectangles.append(rect)
@@ -50,8 +53,9 @@ class Vision:
         # done. If you put it at 2 then an object needs at least 3 overlapping rectangles to appear
         # in the result. I've set eps to 0.5, which is:
         # "Relative difference between sides of the rectangles to merge them into a group."
-        rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
-        #print(rectangles)
+        rectangles, weights = cv.groupRectangles(
+            rectangles, groupThreshold=1, eps=0.5)
+        # print(rectangles)
 
         points = []
         if len(rectangles):
@@ -76,17 +80,18 @@ class Vision:
                     top_left = (x, y)
                     bottom_right = (x + w, y + h)
                     # Draw the box
-                    cv.rectangle(fullGame_img, top_left, bottom_right, color=line_color, 
-                                lineType=line_type, thickness=2)
+                    cv.rectangle(fullGame_img, top_left, bottom_right, color=line_color,
+                                 lineType=line_type, thickness=2)
                 elif debug_mode == 'points':
                     # Draw the center point
-                    cv.drawMarker(fullGame_img, (center_x, center_y), 
-                                color=marker_color, markerType=marker_type, 
-                                markerSize=40, thickness=2)
+                    cv.drawMarker(fullGame_img, (center_x, center_y),
+                                  color=marker_color, markerType=marker_type,
+                                  markerSize=40, thickness=2)
 
         if debug_mode:
-            cv.imshow('Matches', fullGame_img)
+            # cv.imshow('Matches', fullGame_img)
             # cv.waitKey()
             # cv.imwrite('result_click_point.jpg', fullGame_img)
+            pass
 
         return points

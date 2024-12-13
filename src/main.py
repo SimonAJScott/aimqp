@@ -20,7 +20,7 @@ def main():
     event = multiprocessing.Event()
 
     # Run the algorithm while death detection is ongoing
-    algorithmV1(5, 20, event)
+    algorithmV1(10, 100, event)
 
 
 def startDeathDetection(event):
@@ -38,25 +38,23 @@ def algorithmV1(num_generations, num_inputs, event):
     currentLevelMemory = LevelMemory(num_inputs)
     currentLevelMemory.printLevelData()
     for i in range(num_generations):
-        print("-----------------------generation ", i, " ---------------------")
+        print("-----------------------generation ",
+              i+1, " ---------------------")
         levelMemoryList = currentLevelMemory.getLevelData()
         print("created current memory")
-
         # Start a new process for death detection at the start of each generation
         death_detection_process = multiprocessing.Process(
             target=startDeathDetection, args=(event,))
         death_detection_process.start()
-
-        for data in range(0, len(levelMemoryList)):
-            print("pressing 2 inputs")
-            Actions.pressMultiple(actions, levelMemoryList[data])
+        time.sleep(2)
+        for j in range(0, len(levelMemoryList)):
             # need to add stop when you die and cut off array to recreate
-            if event.is_set():
-                print("updating memory, resetting")
+            if (Actions.pressMultiple(actions, levelMemoryList[j], event) == 1):
+                percentData.updateData(levelMemoryList[j], True)
+                currentLevelMemory.update(j, percentData)
                 break
-            print("updating memory, successful")
-        print("updating memory, new generation")
-        # LevelMemory.update(currentLevelMemory)
+            percentData.updateData(levelMemoryList[j], False)
+    exit(1)
 
 
 if __name__ == "__main__":

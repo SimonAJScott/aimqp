@@ -41,7 +41,7 @@ class Actions:
             Actions.press(key_to_press, duration)
             time.sleep(wait)  # Sleep for half a second between presses
 
-    def pressMultiple(self, data: Data):
+    def pressMultiple(self, data: Data, event):
         """
         Presses multiple buttons for a certain duration, then lifts them.
         """
@@ -50,8 +50,16 @@ class Actions:
         # Press all keys
         for key in keys:
             keyboard.press(key.value)
+        if event.is_set():
+            # Release all keys
+            for key in keys:
+                keyboard.release(key.value)
+            event.clear()
+            time.sleep(0.5)  # to try and not trigger cv2 twice
+            return 1
         time.sleep(data.getPressDuration())
 
         # Release all keys
         for key in keys:
             keyboard.release(key.value)
+        return 0

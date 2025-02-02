@@ -1,6 +1,8 @@
-import data
+from data import Data
 import itertools
 from keys_enum import Keys
+import pickle
+from input import maxDuration
 
 
 class PercentData:
@@ -12,8 +14,8 @@ class PercentData:
             list(Keys), 2))  # we assume combinations of 2
         allData = {}
         for keys in combinations:
-            for i in range(51):  # assuming 0-5, 0.1 increments (seconds)
-                tempPercent = 1/(len(list(combinations))*50)
+            for i in range(maxDuration*10+1):  # assuming 0-1, 0.1 increments (seconds)
+                tempPercent = 1/(len(list(combinations))*(maxDuration*10))
                 tempPressDuration = i/10
                 key = (keys, tempPressDuration)
                 allData[key] = tempPercent
@@ -21,3 +23,38 @@ class PercentData:
 
     def getAllData(self):
         return self.allData
+
+    def saveData(self, title):
+        filename = f"{title}_percentdata.pkl"
+        with open(filename, "wb") as file:
+            pickle.dump(self.allData, file)
+        print("Saved data:", filename)
+
+    def updateData(self, data: list[Data], failed):
+        for tempData in data:
+            key = (tempData.getKeys(), tempData.getPressDuration())
+            currentPercent = self.allData[key]
+            if failed:
+                self.allData[key] = currentPercent - currentPercent*.1
+            else:
+                self.allData[key] = currentPercent + currentPercent*.01
+
+            total = sum(self.allData.values())
+            if total != 1:
+                for key in self.allData:
+                    self.allData[key] = self.allData[key] / total
+        return len(data)
+
+    def loadData(self, title):
+        # Set the filename based on the title
+        filename = f"{title}_percentdata.pkl"
+
+        # Load the dictionary from the file
+        try:
+            with open(filename, "rb") as file:
+                # Update self.allData with loaded data
+                self.allData = pickle.load(file)
+            print("Percent data loaded successfully.")
+        except FileNotFoundError:
+            print("No file found, created new percent dataset")
+            return

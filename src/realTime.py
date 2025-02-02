@@ -41,8 +41,11 @@ class objectDetection:
             if self.points:
                 # prints a statement confirming a failure
                 print('lmao died ->', testNum)
+                # prints a statement confirming a failure
+                print('lmao died ->', testNum)
                 testNum = testNum + 1
             # debug the loop rate
+            # print('FPS {}'.format(1 / (time() - self.loop_time)))
             # print('FPS {}'.format(1 / (time() - self.loop_time)))
             self.loop_time = time()
 

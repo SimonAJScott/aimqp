@@ -1,2 +1,5 @@
 # Virtual environment
 .venv/
+src/celeste_levelmemorydata.pkl
+src/celeste_percentdata.pkl
+src/__pycache__

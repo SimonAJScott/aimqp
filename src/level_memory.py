@@ -1,7 +1,10 @@
+import pickle
 from data import Data
 import random
 from keys_enum import Keys
 import itertools
+from percent_data import PercentData
+from input import maxDuration
 
 
 class LevelMemory:
@@ -27,20 +30,37 @@ class LevelMemory:
         temp = Data()
         combinationsList = list(itertools.combinations(list(Keys), 2))
         temp.setKeys(random.choice(combinationsList))
-        temp.setPressDuration(round(random.uniform(0, 5), 1))
+        temp.setPressDuration(round(random.uniform(0, maxDuration), 1))
         return temp
 
-    # def update(self, failedList, failedData: Data): # need to update for percentages
-    #     updatedArray = []
-    #     whenBroke = -1
-    #     for i in range(0, len(failedList)):
-    #         updatedArray[i] = failedList[i]
-    #         if (failedList[i] == failedData):
-    #             whenBroke = i-1
-    #             break
+    def update(self, where: int, percentData: PercentData):
+        self.level_data[where]
+        options = list(percentData.allData.keys())
+        weights = list(percentData.allData.values())
+        for i in range(where, len(self.level_data)):
+            temp = Data()
+            keys = random.choices(
+                options, weights=weights, k=1)[0]
+            temp.setKeys(keys[0])
+            temp.setPressDuration(keys[1])
+            self.level_data[i] = temp
 
-    #     for i in range(whenBroke, len(failedList)):
-    #         if (i == whenBroke+1):
-    #             updatedArray[i] = self.generateRandomData(failedData)
-    #         updatedArray[i] = self.generateRandomData()
-    #     self.level_data = updatedArray
+    def loadData(self, title):
+        # Set the filename based on the title
+        filename = f"{title}_levelmemorydata.pkl"
+
+        # Load the dictionary from the file
+        try:
+            with open(filename, "rb") as file:
+                # Update self.allData with loaded data
+                self.level_data = pickle.load(file)
+            print("Level Memory data loaded successfully.")
+        except FileNotFoundError:
+            print("No file found, created new level-memory dataset")
+            return
+
+    def saveData(self, title):
+        filename = f"{title}_levelmemorydata.pkl"
+        with open(filename, "wb") as file:
+            pickle.dump(self.level_data, file)
+        print("Saved data:", filename)

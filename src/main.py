@@ -9,18 +9,30 @@ import realTime
 
 # save data based on input (name of game)
 def main():
-    print("This is going to be an interesting project")
-    game = "celeste"
-    window = gw.getWindowsWithTitle(game)[0]  # find game window
+
+    # # List all open windows
+    # windows = gw.getAllTitles()
+
+    # # Print non-empty window titles
+    # for window in windows:
+    #     if window.strip():  # Filter out empty titles
+    #         print(window)
+    # print("This is going to be an interesting project")
+    game = "mario"
+    platform = "Mesen - Super Mario Bros (E)"
+    window = gw.getWindowsWithTitle(platform)[0]  # find game window
     window.restore()  # open window if minimized
     window.activate()  # put window on top
     time.sleep(2)  # wait a second for game to appear
 
-    # Create an Event object for synchronization
+    # # Create an Event object for synchronization
     event = multiprocessing.Event()
 
-    # Run the algorithm while death detection is ongoing
-    algorithmV1(2, 100, 2.5, event, game)
+    # # Run the algorithm while death detection is ongoing
+    # algorithmV1(2, 100, 2.5, event, game)
+    death_detection_process = multiprocessing.Process(
+        target=startDeathDetection, args=(event,))
+    death_detection_process.start()
 
 
 def startDeathDetection(event):

@@ -3,10 +3,8 @@ from enum import Enum
 
 
 class Keys(Enum):
-    UP = Key.up         # Move up (on walls?)
-    DOWN = Key.down     # Move down
-    LEFT = Key.left     # Move left
-    RIGHT = Key.right    # Move right
-    JUMP = 'c'     # Jump
-    DASH = 'x'           # Dash
-    GRAB = 'z'  # Grab
+    LEFT = Key.left
+    RIGHT = Key.right
+    JUMP = Key.space
+    DASH = Key.shift
+    DOWN = Key.down

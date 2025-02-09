@@ -1,3 +1,4 @@
+import sys
 import pygetwindow as gw
 import time
 from input import Actions
@@ -12,7 +13,7 @@ def main():
 
     print("This is going to be an interesting project")
     game = "mario"
-    platform = "Super Mario Bros — Personal — Microsoft Edge"
+    platform = 'Super Mario Bros - Personal - Microsoft​ Edge'
     window = gw.getWindowsWithTitle(platform)[0]  # find game window
     window.restore()  # open window if minimized
     window.activate()  # put window on top
@@ -22,7 +23,7 @@ def main():
     event = multiprocessing.Event()
 
     # Run the algorithm while death detection is ongoing
-    algorithmV1(2, 100, 2.5, event, game)
+    algorithmV1(20, 500, 4, 8, event, game)
 
 
 def startDeathDetection(event):
@@ -33,7 +34,7 @@ def startDeathDetection(event):
     event.set()
 
 
-def algorithmV1(num_generations: int, num_inputs: int, secondsCut: float, event, game):
+def algorithmV1(num_generations: int, num_inputs: int, secondsCut: float, waitBetweenGenerations: int, event, game):
     actions = Actions()
     percentData = PercentData()
     percentData.loadData(game)
@@ -66,9 +67,11 @@ def algorithmV1(num_generations: int, num_inputs: int, secondsCut: float, event,
                 break
             actionsCut.append(levelMemoryList[j])
             percentData.updateData(actionsCut, False)
+        print("waiting for death screen to finish")
+        time.sleep(waitBetweenGenerations)
     percentData.saveData(game)  # change later based on game
     currentLevelMemory.saveData(game)
-    exit(1)
+    sys.exit(1)
 
 
 if __name__ == "__main__":

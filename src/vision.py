@@ -88,9 +88,9 @@ class Vision:
                                   color=marker_color, markerType=marker_type,
                                   markerSize=40, thickness=2)
 
-        if debug_mode:
-            cv.imshow('Matches', fullGame_img)
-            cv.waitKey()
-            cv.imwrite('result_click_point.jpg', fullGame_img)
+        # if debug_mode:
+        #     cv.imshow('Matches', fullGame_img)
+        #     # cv.waitKey()
+        #     # cv.imwrite('result_click_point.jpg', fullGame_img)
 
         return points

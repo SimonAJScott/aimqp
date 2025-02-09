@@ -27,7 +27,7 @@ class objectDetection:
         self.vision_detect = Vision('anglestest.jpg')
 
         self.loop_time = time()
-        testNum = 0
+        # testNum = 0
         while (True):
 
             # get an updated image of the game
@@ -40,10 +40,9 @@ class objectDetection:
                 # change the number in order to change the accuracy of the threshold. example self.points = self.vision_detect.find(self.screenshot, 0.67, 'rectangles')
             if self.points:
                 # prints a statement confirming a failure
-                print('lmao died ->', testNum)
-                # prints a statement confirming a failure
-                print('lmao died ->', testNum)
-                testNum = testNum + 1
+                # print('lmao died ->', testNum)
+                # testNum = testNum + 1
+                break
             # debug the loop rate
             # print('FPS {}'.format(1 / (time() - self.loop_time)))
             # print('FPS {}'.format(1 / (time() - self.loop_time)))
@@ -59,5 +58,5 @@ class objectDetection:
         print('Done.')
 
 
-detector = objectDetection()
-detector.find_failstate()  # To detect fail state
+# detector = objectDetection()
+# detector.find_failstate()  # To detect fail state

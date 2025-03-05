@@ -24,7 +24,7 @@ class objectDetection:
             'Super Mario Bros - Personal - Microsoft​ Edge')
         # initialize the Vision class
         # add the image of the death screen below
-        self.vision_detect = Vision('anglestest.jpg')
+        self.vision_detect = Vision('mario_death.jpg')
 
         self.loop_time = time()
         # testNum = 0

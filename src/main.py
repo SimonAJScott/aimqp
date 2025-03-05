@@ -12,7 +12,7 @@ import realTime
 def main():
 
     print("This is going to be an interesting project")
-    game = "mario"
+    gamedata = "mario1"
     platform = 'Super Mario Bros - Personal - Microsoft​ Edge'
     window = gw.getWindowsWithTitle(platform)[0]  # find game window
     window.restore()  # open window if minimized
@@ -23,7 +23,7 @@ def main():
     event = multiprocessing.Event()
 
     # Run the algorithm while death detection is ongoing
-    algorithmV1(20, 500, 4, 8, event, game)
+    algorithmV1(100, 2000, 4, 8, event, gamedata)
 
 
 def startDeathDetection(event):
@@ -39,6 +39,7 @@ def algorithmV1(num_generations: int, num_inputs: int, secondsCut: float, waitBe
     percentData = PercentData()
     percentData.loadData(game)
     currentLevelMemory = LevelMemory(num_inputs)
+    print(num_inputs)
     currentLevelMemory.loadData(game)
     for i in range(num_generations):
         print("-----------------------generation ",
@@ -62,7 +63,7 @@ def algorithmV1(num_generations: int, num_inputs: int, secondsCut: float, waitBe
                 numCut = percentData.updateData(actionsCut, True)
 
                 # calculate which actions to update in helper
-                print("NUMBER OF ITEMS BEING CUT:", numCut)
+                print("NUMBER OF ITEMS BEING CUT:", numCut+2)
                 currentLevelMemory.update(j-numCut-2, percentData)
                 break
             actionsCut.append(levelMemoryList[j])
@@ -71,7 +72,7 @@ def algorithmV1(num_generations: int, num_inputs: int, secondsCut: float, waitBe
         time.sleep(waitBetweenGenerations)
     percentData.saveData(game)  # change later based on game
     currentLevelMemory.saveData(game)
-    sys.exit(1)
+    sys.exit()
 
 
 if __name__ == "__main__":

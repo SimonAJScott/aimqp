@@ -4,6 +4,8 @@ import numpy as np
 import cv2 as cv
 import numpy as np
 
+# inspired from https: // www.youtube.com/playlist?list = PL1m2M8LQlzfKtkKq2lK5xko4X-8EZzFPI
+
 
 class Vision:
 

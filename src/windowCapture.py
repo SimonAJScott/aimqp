@@ -3,6 +3,8 @@ import win32gui
 import win32ui
 import win32con
 
+# inspired from  https://www.youtube.com/playlist?list=PL1m2M8LQlzfKtkKq2lK5xko4X-8EZzFPI
+
 
 class WindowCapture:
 

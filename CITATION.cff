@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+title: AI-Driven Gameplay Footage Generation
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Simon
+    family-names: Scott
+    email: sscott@wpi.edu
+    affiliation: Worcester Polytechnic Institute
+  - given-names: 'Harry '
+    family-names: Radenberg
+    email: hradenberg@wpi.edu
+    affiliation: Worcester Polytechnic Institute
+  - given-names: Elijah
+    family-names: Rothschild
+    affiliation: Worcester Polytechnic Institute
+    email: earothschild@wpi.edu
+repository-code: 'https://github.com/SimonAJScott/aimqp'
+repository: >-
+  https://github.com/learncodebygaming/opencv_tutorials?tab=MIT-1-ov-file
+abstract: >-
+  Our project is a data-driven system that simulates key
+  press combinations and their associated durations,
+  adjusting probabilities based on success or failure. It
+  supports random data generation, saving/loading data for
+  persistence, and real-time updates based on user input.
+  The scope of our project revolves around mario, but can be
+  altered to work with any platformer.
+license: MIT
+date-released: '2025-03-24'

@@ -3,7 +3,6 @@ Worcester Polytechnic Institute Major Qualifying Project
 
 Our project is a data-driven system that simulates key press combinations and their associated durations, adjusting probabilities based on success or failure. It supports random data generation, saving/loading data for persistence, and real-time updates based on user input. The scope of our project revolves around mario, but can be altered to work with any platformer.
 
-Getting Started
 To get started with this project, follow the instructions below.
 
 1. Clone the repository
